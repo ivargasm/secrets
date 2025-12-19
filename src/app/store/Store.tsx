@@ -1,6 +1,5 @@
 import { create } from 'zustand';
 import { login, fetchUser, logout, register } from "../lib/api";
-import { redirect } from 'next/navigation';
 
 interface AuthState {
     user: { id: string; username: string; email: string; role: string } | null;
@@ -46,9 +45,9 @@ export const useAuthStore = create<AuthState>((set) => ({
                 return;
             }
             set({ user: null, userAuth: false});
-            redirect("/login");
         } catch (error) {
             console.error("Error al cerrar sesión", error);
+            set({ user: null, userAuth: false});
         }
     },
     registerUser: async (username, email, password) => {

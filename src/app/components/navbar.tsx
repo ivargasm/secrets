@@ -1,12 +1,14 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import { Menu, X, Home, Folder, LogOut, LogIn, Sun, Moon } from "lucide-react";
 import Link from "next/link";
 import { useAuthStore } from "../store/Store";
 import { Button } from "@/components/ui/button";
 
 export default function Navbar() {
+    const router = useRouter();
     const [menuOpen, setMenuOpen] = useState(false);
     const { userAuth, logout } = useAuthStore();
 
@@ -20,6 +22,11 @@ export default function Navbar() {
         } else {
             document.documentElement.classList.add("dark")
         }
+    }
+
+    const handleLogout = async () => {
+        await logout();
+        router.push("/");
     }
 
     return (
@@ -53,9 +60,9 @@ export default function Navbar() {
                                 </Link>
                             </li>
                             <li>
-                                <Link onClick={() => { logout(); }} className="flex items-center gap-2 hover:text-blue-600" href={"/"}>
+                                <button onClick={handleLogout} className="flex items-center gap-2 hover:text-blue-600">
                                     <LogOut size={20} /> Logout
-                                </Link>
+                                </button>
                             </li>
                         </>
                     )}
@@ -94,9 +101,9 @@ export default function Navbar() {
                                     </Link>
                                 </li>
                                 <li>
-                                    <Link onClick={() => { logout(); }} className="flex items-center gap-2 text-slate-700 hover:text-blue-600" href={"/"}>
+                                    <button onClick={handleLogout} className="flex items-center gap-2 text-slate-700 hover:text-blue-600">
                                         <LogOut size={20} /> Logout
-                                    </Link>
+                                    </button>
                                 </li>
                             </>
                         )}

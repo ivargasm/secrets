@@ -1,4 +1,3 @@
-import { redirect } from "next/navigation";
 import type {
     Secret,
     SecretDetail,
@@ -19,7 +18,7 @@ import type {
 
 export const fetchUser = async (url: string) => {
     const res = await fetch(`${url}/auth/me`, { credentials: 'include' });
-    if (!res.ok) redirect("/auth/login");;
+    if (!res.ok) throw new Error("Unauthorized");
     return res.json();
 };
 

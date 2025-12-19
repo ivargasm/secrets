@@ -1,10 +1,17 @@
 "use client";
 
+import { useRouter } from "next/navigation";
 import { useAuthStore } from "../store/Store";
 import ProtectedRoute from "../components/ProtectedRoutes";
 
 export default function ProfilePage() {
+    const router = useRouter();
     const { user, logout } = useAuthStore();
+
+    const handleLogout = async () => {
+        await logout();
+        router.push("/auth/login");
+    };
 
     return (
         <ProtectedRoute>
@@ -15,7 +22,7 @@ export default function ProfilePage() {
                 <p><strong>Rol:</strong> {user?.role}</p>
                 <button
                     className="mt-4 bg-red-500 text-white py-2 px-4 rounded hover:bg-red-600"
-                    onClick={logout}
+                    onClick={handleLogout}
                 >
                     Cerrar sesión
                 </button>
