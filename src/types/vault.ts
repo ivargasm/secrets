@@ -77,7 +77,7 @@ export interface AuditLog {
     api_key_id?: number;
     ip_address?: string;
     timestamp: string;
-    details?: Record<string, any>;
+    details?: Record<string, unknown>;
 }
 
 export interface GetSecretsParams {
